@@ -10,7 +10,7 @@ title:  "from . import _mklinit \n ImportError: DLL load failed"
 - Conda environment was installed from within Visual Studio 2019
 
 <details><summary>Steps I took to create conda env in VS2019 (included for the sake of reproducibility) </summary>
-
+```
 1. Launch Visual Studio 2019 Professional
 2. Click "Continue without code" at the bottom right of the launch window
 3. Click "Add Environment" in "Python Environments" panel
@@ -19,7 +19,7 @@ title:  "from . import _mklinit \n ImportError: DLL load failed"
 6. Select radio button "One or more Anaconda package names" 
 7. Enter _python numpy pandas scipy matplotlib sympy pytest_  into the text box below
 8. Click "Create"
-
+```
 </details>
 
 
