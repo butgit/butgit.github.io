@@ -1,51 +1,13 @@
-Environment: conda installed from within Visual Studio 2019
+---
+layout: post
+title:  "from . import _mklinit \n ImportError: DLL load failed"
+---
 
-IDE: Visual Studio Code with Python extension installed.
+# How to solve ImportError: DLL load failed when using conda environment
 
-Code to run:
-import matplotlib.pyplot as plt
-import numpy as np
-
-x = np.linspace(0, 20, 100)  # Create a list of evenly-spaced numbers over the range
-plt.plot(x, np.sin(x))       # Plot the sine of each x point
-plt.show()                   # Display the plot
-
-
-Error message:
-
-Traceback (most recent call last):
-  File "c:\Users\me\.vscode\extensions\ms-python.python-2019.8.30787\pythonFiles\ptvsd_launcher.py", line 43, in <module>
-    main(ptvsdArgs)
-  File "c:\Users\me\.vscode\extensions\ms-python.python-2019.8.30787\pythonFiles\lib\python\ptvsd\__main__.py", line 432, in main
-    run()
-  File "c:\Users\me\.vscode\extensions\ms-python.python-2019.8.30787\pythonFiles\lib\python\ptvsd\__main__.py", line 316, in run_file
-    runpy.run_path(target, run_name='__main__')
-  File "C:\Users\me\.conda\envs\conda-64\lib\runpy.py", line 263, in run_path
-    pkg_name=pkg_name, script_name=fname)
-  File "C:\Users\me\.conda\envs\conda-64\lib\runpy.py", line 96, in _run_module_code
-    mod_name, mod_spec, pkg_name, script_name)
-  File "C:\Users\me\.conda\envs\conda-64\lib\runpy.py", line 85, in _run_code
-    exec(code, run_globals)
-  File "C:\Users\me\source\hello\standardplot.py", line 1, in <module>
-    import matplotlib.pyplot as plt
-  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\matplotlib\__init__.py", line 138, in <module>
-    from . import cbook, rcsetup
-  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\matplotlib\cbook\__init__.py",
-line 31, in <module>
-    import numpy as np
-  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\numpy\__init__.py", line 140, in <module>
-    from . import _distributor_init
-  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\numpy\_distributor_init.py", line 34, in <module>
-    from . import _mklinit
-ImportError: DLL load failed: The specified module could not be found.
-
-
-
-ImportError: DLL load failed for numpy 
-
-OS info: Windows 10 Pro 64 bit Build 17763
-
-My conda environment was created in Visual Studio 2019.
+## Environment: 
+- OS info: Windows 10 Pro 64 bit Build 17763
+- Conda environment was installed from within Visual Studio 2019
 
 <details><summary>Steps I took to create conda env in VS2019 (included for the sake of reproducibility) </summary>
 
@@ -60,8 +22,55 @@ My conda environment was created in Visual Studio 2019.
 
 </details>
 
-I wanted to share the environment with vscode (visual studio code) in order to save the disk space.  Although vscode recognized the conda environment, it was not able to import numpy, with the same error message as the thread's title. 
-Like others said here, it was a PATH issue, and the solution was to add to PATH the following:
+
+## IDE: Visual Studio Code with Python extension installed.
+
+## Code:
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 20, 100)  # Create a list of evenly-spaced numbers over the range
+plt.plot(x, np.sin(x))       # Plot the sine of each x point
+plt.show()                   # Display the plot
+```
+
+Error message:
+
+```
+Traceback (most recent call last):
+  File "c:\Users\me\.vscode\extensions\ms-python.python-2019.8.30787\pythonFiles\ptvsd_launcher.py", line 43, in <module>
+    main(ptvsdArgs)
+  File "c:\Users\me\.vscode\extensions\ms-python.python-2019.8.30787\pythonFiles\lib\python\ptvsd\__main__.py", line 432, in main
+    run()
+  File "c:\Users\me\.vscode\extensions\ms-python.python-2019.8.30787\pythonFiles\lib\python\ptvsd\__main__.py", line 316, in run_file
+    runpy.run_path(target, run_name='__main__')
+  File "C:\Users\me\.conda\envs\conda-64\lib\runpy.py", line 263, in run_path
+    pkg_name=pkg_name, script_name=fname)
+  File "C:\Users\me\.conda\envs\conda-64\lib\runpy.py", line 96, in _run_module_code
+    mod_name, mod_spec, pkg_name, script_name)
+  File "C:\Users\me\.conda\envs\conda-64\lib\runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "d:\ppark\source\hello\standardplot.py", line 1, in <module>
+    import matplotlib.pyplot as plt
+  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\matplotlib\__init__.py", line 138, in <module>
+    from . import cbook, rcsetup
+  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\matplotlib\cbook\__init__.py",
+line 31, in <module>
+    import numpy as np
+  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\numpy\__init__.py", line 140, in <module>
+    from . import _distributor_init
+  File "C:\Users\me\.conda\envs\conda-64\lib\site-packages\numpy\_distributor_init.py", line 34, in <module>
+    from . import _mklinit
+ImportError: DLL load failed: The specified module could not be found.
+```
+
+## How I tackled the problem
+
+- Context: I wanted to share the environment with vscode (visual studio code) in order to save the disk space. 
+- Situation: Although vscode recognized the conda environment, it was not able to import matplotlib and numpy. 
+- Observation: It was a PATH issue, and the solution was to add to PATH the following:
 _c:\Users\me\\.conda\envs\conda-64\Library\bin_
 The exact path may vary, but it would be something like this: _your\conda\path\\..\Library\bin_.
 
