@@ -1,0 +1,23 @@
+OS info: Windows 10 Pro 64 bit Build 17763
+
+My conda environment was created in Visual Studio 2019.
+
+<details><summary>Steps I took to create conda env in VS2019 (included for the sake of reproducibility) </summary>
+
+1. Launch Visual Studio 2019 Professional
+2. Click "Continue without code" at the bottom right of the launch window
+3. Click "Add Environment" in "Python Environments" panel
+4. Click "Conda environment"
+5. Name it as _conda-64_ instead of the default name _env_
+6. Select radio button "One or more Anaconda package names" 
+7. Enter _python numpy pandas scipy matplotlib sympy pytest_  into the text box below
+8. Click "Create"
+
+</details>
+
+I wanted to share the environment with vscode (visual studio code) in order to save the disk space.  Although vscode recognized the conda environment, it was not able to import numpy, with the same error message as the thread's title. 
+Like others said here, it was a PATH issue, and the solution was to add to PATH the following:
+_c:\Users\me\\.conda\envs\conda-64\Library\bin_
+The exact path may vary, but it would be something like this: _your\conda\path\\..\Library\bin_.
+
+And now it works. Hope it helps anyone who might be struggling with the import problem. 
